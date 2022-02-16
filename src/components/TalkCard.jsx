@@ -1,7 +1,8 @@
 import { IonCardSubtitle, IonIcon, IonModal, IonNote, IonRow, useIonModal } from "@ionic/react";
-import { construct,bulb, micOutline, personOutline } from "ionicons/icons";
+import { construct,bulb, micOutline, personOutline, checkmarkOutline, bookmarkOutline } from "ionicons/icons";
 import { useStoreState } from "pullstate";
 import { useEffect, useState } from "react";
+import * as React from "react";
 
 import { CategoryStore } from '../store';
 import { getPeople } from "../store/PeopleStore";
@@ -15,82 +16,85 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
 	const talkCategory = useStoreState(CategoryStore, getCategory(talk.category_id));
   const [ speakers, setSpeakers ] = useState([]);
   const [ showModal, setShowModal ] = useState(false);
-  const [data, setData]=useState(null);
+  const [photo, setPhoto]=useState(null);
   const [loading,setLoading]=useState(true);
   const [error , setError]= useState(null);
 
+  const [compteur, setCompteur] = useState(true);
+
+  function affichagePhoto(id){
+    fetch(`http://localhost:8090/ato/photos/${id}`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw response;
+    })
+    .then((photo) => {
+      setPhoto(photo);
+      console.log(photo);
+      // setCompteur(false);
+    })
+  }
   useEffect(() => {
-
-    setSpeakers(getPeople(talk.speakers));
+      console.log(talk.id);
+      affichagePhoto(talk.id);
   }, [ talk ]);
-
-  // useEffect(()=>{
-  //   fetch("http://localhost:8090/ato/regions")
-  //   .then((response)=> {
-  //     if(response.ok){
-  //       return response.json();
-  //     }
-  //     throw response;
-  //   })
-  //   .then((data)=>{
-  //     setData(data);
-  //   })
-  //   .catch((error)=> {
-  //     console.error("Error fetching data :", error);
-  //     setError(error);
-  //   })
-  //   .finally(()=> {
-  //     setLoading(false);
-  //   });
-  // },[]);
-  // if (loading) return "Loading ...";
-  // if (error) return "Error!";
-
 	return (
     <>
       <div className={ `${ styles.talkCard } ${ upcoming && styles.upcomingCard }` } onClick={ () => setShowModal(true) }>
         
         {/* icone ampoule couleur */}
         <div className={ styles.cardTitle }>
-          <IonIcon color={ upcoming ? "primary" : "white" } icon={ construct } />
-          <IonCardSubtitle color={ upcoming ? "light" : "primary" }>{ talkCategory.name } talks</IonCardSubtitle>
+          <IonIcon color={ upcoming ? "primary" : "white" } 
+          icon={(talk.etat.id===2)? construct :
+          (talk.etat.id===3)? checkmarkOutline 
+          : bookmarkOutline } />
+          <IonCardSubtitle color={ upcoming ? "light" : "primary" }>{ talk.etat.nom } </IonCardSubtitle>
         </div>
 
         {/* titre en couleur noire */}
         <div className={ styles.talkTitle }>
-          <h3>{ talk.title }</h3>
+          <h3>{ (talk.description)? talk.description : "..." }</h3>
+        </div>
+
+        {/* titre region en couleur noire */}
+        <div className={ styles.talkTitle }>
+          <h3>{ (talk.region)? talk.region.nom : "..." }</h3>
+        </div>
+
+        {/* type en couleur noire */}
+        <div className={ styles.talkTitle }>
+          <h3>{ (talk.type)? talk.type.nom : "..." }</h3>
         </div>
 
         {/*upcoming mpiditra sarina avatar*/}
         { !upcoming &&
         
           <IonRow className={ styles.talkSpeakers }>
-            { speakers.map((speaker, index) => {
-                
+            {(photo)? photo.map((speaker, index) => {
                 return (
-
                   <div key={ `speaker_${ index }` } className={ styles.talkSpeaker }>
-                    <img src={ speaker.image } alt="avatar" />
+                    <img src={"data:image/jpeg;base64,"+speaker.image.data } alt="avatar" />
                   </div>
                 );
-            })}
+            }) : "..."}
           </IonRow>
         }
-        
         
         {/*style bas du tableau*/}
         { !upcoming && 
           
           <div className={ styles.talkDetails }>
-            {/* <div className={ styles.detailCount }>
-              <IonIcon icon={ micOutline } color="primary" />
-              <span>{ talk.speakers } Speakers</span>
+            <div className={ styles.detailCount }>
+              {/* <IonIcon icon={ micOutline } color="primary" /> */}
+              <span>debut:{ (talk.dateSignalement)? talk.dateSignalement : "..." }</span>
             </div>
 
             <div className={ styles.detailCount }>
-              <IonIcon icon={ personOutline } color="primary" />
-              <span>{ talk.audience } Audience</span>
-            </div> */}
+              {/* <IonIcon icon={ personOutline } color="primary" /> */}
+              <span>fin: { (talk.dateFinSignalement)? talk.dateFinSignalement : "..." } </span>
+            </div>
           </div>
         }
       </div>
