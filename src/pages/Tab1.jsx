@@ -73,13 +73,13 @@ const Tab1 = () => {
           </IonRow>
           
           {/* FANASINA TABLEAU  <talkIndex> numero de tableau  */}
-          <IonRow>
+          
             <IonCol size="12">
               { data.map((talk, talkIndex) => {
                 return talkIndex >= 0 && <TalkCard key={ talkIndex } talk={ talk } pageRef={ pageRef } />;
               })}
             </IonCol>
-          </IonRow>
+          
         </IonGrid>
       </IonContent>
     </IonPage>
