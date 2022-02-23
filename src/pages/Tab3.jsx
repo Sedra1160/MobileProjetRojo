@@ -9,11 +9,10 @@ const Tab3 = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Ajout signalement</IonTitle>
+          <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader> 
       
-   
 {/* <form className="ion-padding">    */}
     <IonItem> 
         <IonLabel position="floating">Email</IonLabel>

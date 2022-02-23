@@ -1,5 +1,6 @@
-import { IonInput,IonItem,IonLabel,IonButton,IonCheckbox, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonContent } from '@ionic/react';
+import { IonInput,IonItem,IonLabel,IonButton,IonIcon,IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonContent } from '@ionic/react';
 import { useState } from 'react';
+import {  logOut } from 'ionicons/icons';
 // import './Tab2.css';
 
 
@@ -27,6 +28,11 @@ const [latitude ,setLatitude]=useState(null);
       <IonHeader>
         <IonToolbar>
           <IonTitle>Ajout signalement</IonTitle>
+          <IonButtons slot="end">
+            <IonButton>
+              <IonIcon className='icon' icon={ logOut } />
+            </IonButton>
+            </IonButtons>
         </IonToolbar>
       </IonHeader> 
 {/* <form className="ion-padding">    */}

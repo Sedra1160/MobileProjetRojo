@@ -8,7 +8,7 @@ import './Tab1.css';
 import { TalkCard } from "../components/TalkCard";
 import { useRef } from 'react';
 
-const Tab1 = () => {
+const Tab4 = () => {
 
   const pageRef = useRef();
   const talks = useStoreState(TalkStore, getTalks);
@@ -19,7 +19,7 @@ const Tab1 = () => {
     <IonPage ref={ pageRef }>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tous les signalements</IonTitle>
+          <IonTitle>Notifiactions</IonTitle>
 
           <IonButtons slot="end">
             <IonButton>
@@ -32,22 +32,11 @@ const Tab1 = () => {
 
         <IonGrid className="ion-padding-start ion-padding-end extra-padding ion-padding-bottom ion-margin-bottom">
          
-
-          <IonRow>
-            <IonCol size="12">
-              <IonText color="dark">
-                <p className="title">Cela arrive maintenant</p>
-              </IonText>
-            </IonCol>
-          </IonRow>
           
           {/* FANASINA TABLEAU  <talkIndex> numero de tableau  */}
           <IonRow>
             <IonCol size="12">
-              { talks.map((talk, talkIndex) => {
-                
-                return talkIndex > 0 && <TalkCard key={ talkIndex } talk={ talk } pageRef={ pageRef } />;
-              })}
+            
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -56,4 +45,4 @@ const Tab1 = () => {
   );
 };
 
-export default Tab1;
+export default Tab4;
