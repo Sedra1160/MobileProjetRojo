@@ -5,6 +5,7 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Storage } from '@capacitor/storage';
 import { Capacitor } from '@capacitor/core';
+const axios = require('axios');
 
 export function usePhotoGallery() {
     const [photos, setPhotos] = useState<UserPhoto[]>([]);
@@ -37,7 +38,8 @@ export function usePhotoGallery() {
       return {
         filepath: fileName,
         webviewPath: photo.webPath,
-        data: base64Data
+        data: base64Data,
+        blob: blob
       };
     };
 
@@ -49,12 +51,15 @@ export function usePhotoGallery() {
     });
     const fileName = new Date().getTime() + '.jpeg';
     const savedFileImage = await savePicture(photo, fileName);
-
+    
+    const response = await fetch(photo.webPath!);
+    const blob = await response.blob();
     const newPhotos = [
     {
         filepath: fileName,
         webviewPath: photo.webPath,
-        data : savedFileImage.data
+        data : savedFileImage.data,
+        blob : blob
     },
     ...photos,
     ];
@@ -71,4 +76,5 @@ export interface UserPhoto {
   filepath: string;
   webviewPath?: string;
   data: string;
+  blob: Blob;
 }

@@ -47,41 +47,41 @@ const { photos, takePhoto } = usePhotoGallery();
     alert("geolocalisation non activé");
   }
 
-const postData = async (e) =>{
-  e.preventDefault();
-  const donnees = { 
-        longitude,
-        latitude,
-        description,
-        type: type,
-        etat: 1,
-        utilisateur: 1,
-      };
-      console.log(donnees);
-    // let res = await axios.post('http://localhost:8090/ato/signalement', donnees);
-    // let data = res.data;
-    // setIdSignalement(data.id);
-    let donneesPhoto;
-    let resPhoto;
-    let config;
-    let formData = new FormData();
+  const postData = async (e) =>{
+    e.preventDefault();
+    const donnees = { 
+          longitude,
+          latitude,
+          description,
+          type: type,
+          etat: 1,
+          utilisateur: 1,
+        };
+        console.log(donnees);
+      // let res = await axios.post('http://localhost:8090/ato/signalement', donnees);
+      // let data = res.data;
+      // setIdSignalement(data.id);
+      let donneesPhoto;
+      let resPhoto;
+      let config;
+      let formData = new FormData();
 
-    photos.map((photo) => (
-      formData.append('image',photo.webviewPath),
-      config = {
-          headers: {
-              'content-type': 'multipart/form-data'
-          }
-      },
-      axios.post(`http://localhost:8090/ato/photos?idSignalement=${3}`, {
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data; ',
+      photos.map((photo) => (
+        formData.append('image',photo.blob),
+        config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
         },
-      })
-    ));
-    setCompteur(true);
-}
+        axios.post(`http://localhost:8090/ato/photos?idSignalement=${3}`, {
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data; ',
+          },
+        })
+      ));
+      setCompteur(true);
+  }
 
   useEffect(()=>{
     if (compteur){
