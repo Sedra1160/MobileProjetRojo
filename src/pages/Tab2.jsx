@@ -1,4 +1,4 @@
-import { IonInput,IonItem,IonLabel,IonButton,IonCheckbox, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonInput,IonItem,IonLabel,IonButton,IonCheckbox, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonContent } from '@ionic/react';
 import { useState } from 'react';
 // import './Tab2.css';
 
@@ -52,8 +52,8 @@ const [latitude ,setLatitude]=useState(null);
         <IonSelectOption >Accident</IonSelectOption>
       </IonSelect>
     </IonItem>
-
     <IonButton className="ion-margin-top" type="submit" expand="block">Envoyer</IonButton>
+    <IonContent/>
 {/* </from>   */}
     </IonPage>
   );

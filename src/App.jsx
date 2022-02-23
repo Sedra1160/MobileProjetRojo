@@ -87,7 +87,7 @@ const App = () => {
             })}
 
             <Route exact path="/">
-              <Redirect to="/home" />
+              <Redirect to="/account" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
