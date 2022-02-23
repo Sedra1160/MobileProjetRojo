@@ -59,6 +59,18 @@ const Tab4 = () => {
                   <IonCardContent>Nouveau signalement</IonCardContent>
               </IonCard>
             </IonCol>
+            <IonCol size="12">
+              <IonCard>
+                  <IonCardHeader>notification</IonCardHeader>
+                  <IonCardContent>Nouveau signalement</IonCardContent>
+              </IonCard>
+            </IonCol>
+            <IonCol size="12">
+              <IonCard>
+                  <IonCardHeader>notification</IonCardHeader>
+                  <IonCardContent>Nouveau signalement</IonCardContent>
+              </IonCard>
+            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>

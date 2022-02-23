@@ -1,7 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { addCircle,logOut , addCircleOutline, home, homeOutline, notifications, notificationsOutline, person, personOutline, search, searchOutline } from 'ionicons/icons';
+import { addCircle,logOut , addCircleOutline, home, homeOutline, notifications, notificationsOutline, person, personOutline, searchOutline } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -31,28 +31,6 @@ import { useState } from 'react';
 const App = () => {
 
   const tabs = [
-
-    {
-      name: "Home",
-      url: "/home",
-      activeIcon: home,
-      icon: homeOutline,
-      component: Tab1
-    },
-    // {
-    //   name: "Search",
-    //   url: "/search",
-    //   activeIcon: search,
-    //   icon: logOut,
-    //   component: Tab2
-    // },
-    {
-      name: "Add",
-      url: "/add",
-      activeIcon: addCircle,
-      icon: addCircleOutline,
-      component: Tab2
-    },
     {
       name: "Account",
       url: "/account",
@@ -60,6 +38,21 @@ const App = () => {
       icon: personOutline,
       component: Tab3
     },
+    {
+      name: "Home",
+      url: "/home",
+      activeIcon: home,
+      icon: homeOutline,
+      component: Tab1
+    },
+    {
+      name: "Add",
+      url: "/add",
+      activeIcon: addCircle,
+      icon: addCircleOutline,
+      component: Tab2
+    },
+    
     {
       name: "Notifications",
       url: "/notifications",
@@ -69,7 +62,8 @@ const App = () => {
     }
   ];
 
-  const [ activeTab, setActiveTab ] = useState(tabs[0].name);
+  const [ activeTab, setActiveTab ] = useState(tabs[2].name);
+  
 
   return (
     <IonApp>
@@ -94,12 +88,17 @@ const App = () => {
           <IonTabBar slot="bottom">
             { tabs.map((tab, barIndex) => {
 
-              const active = tab.name === activeTab;
+            const active = tab.name === activeTab;
+            function icon (){
+              return (
+                <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
+              );
+            }
 
               return (
 
                 <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
-                  <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
+                  {icon()}
                 </IonTabButton>
               );
             })}
