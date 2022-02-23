@@ -5,8 +5,6 @@ import {useForm, Controller } from "react-hook-form";
 import Select from 'react-select';
 
 const Tab2 = () => {
-  // var latitude=0;
-  // var longitude=0;
 const [longitude ,setLongitude]=useState(null);
 const [latitude ,setLatitude]=useState(null);
 const [data, setData]=useState(null);

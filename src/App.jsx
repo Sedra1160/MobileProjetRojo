@@ -69,44 +69,54 @@ const App = () => {
   ];
 
   const [ activeTab, setActiveTab ] = useState(tabs[0].name);
-
-  return (
-    <IonApp>
-      <IonReactRouter>
-        <IonTabs onIonTabsDidChange={ e => setActiveTab(e.detail.tab) }>
-          <IonRouterOutlet>
-
-            { tabs.map((tab, index) => {
-
-              return (
-
-                <Route key={ index } exact path={ tab.url }>
-                  <tab.component />
-                </Route>
-              );
-            })}
-
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-          </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            { tabs.map((tab, barIndex) => {
-
-              const active = tab.name === activeTab;
-
-              return (
-
-                <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
-                  <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
-                </IonTabButton>
-              );
-            })}
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    </IonApp>
+  const mapiseo=()=>{
+    return <h1>tay </h1>
+  }
+  const afterClicK=()=>{
+    return (
+      <IonApp>
+        <IonReactRouter>
+          <IonTabs onIonTabsDidChange={ e => setActiveTab(e.detail.tab) }>
+            <IonRouterOutlet>
+  
+              { tabs.map((tab, index) => {
+  
+                return (
+  
+                  <Route key={ index } exact path={ tab.url }>
+                    <tab.component />
+                  </Route>
+                );
+              })}
+  
+              <Route exact path="/">
+                <Redirect to="/account" />
+              </Route>
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom">
+              { tabs.map((tab, barIndex) => {
+  
+                const active = tab.name === activeTab;
+  
+                return (
+  
+                  <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
+                    <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
+                  </IonTabButton>
+                );
+              })}
+            </IonTabBar>
+          </IonTabs>
+        </IonReactRouter>
+      </IonApp>
+    );
+  }
+  return(
+    <div>
+      <button onClick={()=> mapiseo()} >clickMe</button>
+    </div>
   );
+  
 }
 
 export default App;
