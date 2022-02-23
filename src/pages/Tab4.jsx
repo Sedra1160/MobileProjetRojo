@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import { personOutline, logOut } from 'ionicons/icons';
 import { useStoreState } from 'pullstate';
 import { TalkStore } from '../store';
@@ -19,7 +19,7 @@ const Tab4 = () => {
     <IonPage ref={ pageRef }>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Notifiactions</IonTitle>
+          <IonTitle>Tous les signalements</IonTitle>
 
           <IonButtons slot="end">
             <IonButton>
@@ -36,7 +36,28 @@ const Tab4 = () => {
           {/* FANASINA TABLEAU  <talkIndex> numero de tableau  */}
           <IonRow>
             <IonCol size="12">
-            
+              <IonCard>
+                  <IonCardHeader>notification</IonCardHeader>
+                  <IonCardContent>Nouveau signalement</IonCardContent>
+              </IonCard>
+            </IonCol>
+            <IonCol size="12">
+              <IonCard>
+                  <IonCardHeader>notification</IonCardHeader>
+                  <IonCardContent>Nouveau signalement</IonCardContent>
+              </IonCard>
+            </IonCol>
+            <IonCol size="12">
+              <IonCard>
+                  <IonCardHeader>notification</IonCardHeader>
+                  <IonCardContent>Nouveau signalement</IonCardContent>
+              </IonCard>
+            </IonCol>
+            <IonCol size="12">
+              <IonCard>
+                  <IonCardHeader>notification</IonCardHeader>
+                  <IonCardContent>Nouveau signalement</IonCardContent>
+              </IonCard>
             </IonCol>
           </IonRow>
         </IonGrid>
