@@ -60,6 +60,7 @@
 .talkSpeakers {
 
 	display: flex;
+  	grid-auto-rows: 200px;
 	flex-direction: row;
 	margin-top: 0.5rem;
 }
@@ -67,19 +68,21 @@
 .talkSpeaker {
 
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 3.5rem;
-	width: 3.5rem;
+	height: 10rem;
+	width: 20rem;
 	border-radius: 12px;
 	margin-right: 0.2rem;
+	margin :auto;
 	background-color: var(--ion-color-primary);
 }
 
 .talkSpeaker img {
 
-	height: 3rem;
-	width: 3rem;
+	height: 10rem;
+	width: 20rem;
 }
 
 .talkDetails {
@@ -87,6 +90,7 @@
 	display: flex;
 	justify-content: space-between;
 	margin-top: 1.5rem;
+	background-color: aliceblue;
 }
 
 .detailCount {

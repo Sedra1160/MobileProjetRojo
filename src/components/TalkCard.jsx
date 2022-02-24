@@ -1,4 +1,4 @@
-import { IonCardSubtitle, IonIcon, IonModal, IonNote, IonRow, useIonModal } from "@ionic/react";
+import { IonCardContent, IonCardSubtitle, IonIcon, IonModal, IonNote, IonRow, useIonModal,IonSlides,IonSlide,IonCard,IonContent, IonItem} from "@ionic/react";
 import { construct,bulb, micOutline, personOutline, checkmarkOutline, bookmarkOutline } from "ionicons/icons";
 import { useStoreState } from "pullstate";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { getCategory } from '../store/Selectors';
 import styles from "./TalkCard.module.css";
 import { TalkModal } from "./TalkModal";
 
+
 export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
 
 	const talkCategory = useStoreState(CategoryStore, getCategory(talk.category_id));
@@ -21,6 +22,16 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
   const [error , setError]= useState(null);
 
   const [compteur, setCompteur] = useState(true);
+  const [anne, setAnne] = useState(null);
+  const [mois, setMois] = useState(null);
+  const [jour, setJour] = useState(null);
+  const [heure, setHeure] = useState(null);
+
+  const [anneF, setAnneF] = useState(null);
+  const [moisF, setMoisF] = useState(null);
+  const [jourF, setJourF] = useState(null);
+  const [heureF, setHeureF] = useState(null);
+
 
   function affichagePhoto(id){
     fetch(`https://projetcloudrayansedraravo.herokuapp.com/ato/photos/${id}`)
@@ -37,9 +48,31 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
     })
   }
   useEffect(() => {
-      console.log(talk.id);
+    var d = talk.dateSignalement;
+    setAnne(d.split("-")[0]);
+    setMois(d.split("-")[1]);
+    var list = d.split("-");
+    var izy = list[2].split("T");
+    var h = izy[1].split("+");
+    setJour(izy[0]);
+    setHeure(h[0]);
+
+    if(talk.dateFinSignalement){
+    var d2 = talk.dateFinSignalement;
+    setAnneF(d2.split("-")[0]);
+    setMoisF(d2.split("-")[1]);
+    var list2 = d2.split("-");
+    var izy2 = list2[2].split("T");
+    var h2 = izy2[1].split("+");
+    setJourF(izy2[0]);
+    setHeureF(h2[0]);
+    }
       affichagePhoto(talk.id);
   }, [ talk ]);
+  {
+    
+    console.log(anne);
+  }
 	return (
     <>
       <div className={ `${ styles.talkCard } ${ upcoming && styles.upcomingCard }` } onClick={ () => setShowModal(true) }>
@@ -72,13 +105,21 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
         { !upcoming &&
         
           <IonRow className={ styles.talkSpeakers }>
-            {(photo)? photo.map((speaker, index) => {
-                return (
-                  <div key={ `speaker_${ index }` } className={ styles.talkSpeaker }>
-                    <img src={"data:image/jpeg;base64,"+speaker.image.data } alt="avatar" />
-                  </div>
-                );
-            }) : "..."}
+            <IonCard>  
+              <IonCardContent>
+                <IonSlides>
+                  {(photo)? photo.map((speaker, index) => {
+                    return (
+                      <IonSlide className="sl">
+                        <div key={ `speaker_${ index }` } className={ styles.talkSpeaker }>
+                          <img src={"data:image/jpeg;base64,"+speaker.image.data } alt="avatar" />
+                        </div>
+                      </IonSlide>  
+                    );
+                  }) : "..."}
+                </IonSlides>
+              </IonCardContent>
+            </IonCard> 
           </IonRow>
         }
         
@@ -88,12 +129,12 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
           <div className={ styles.talkDetails }>
             <div className={ styles.detailCount }>
               {/* <IonIcon icon={ micOutline } color="primary" /> */}
-              <span>debut:{ (talk.dateSignalement)? talk.dateSignalement : "..." }</span>
+              <span>debut:{jour+"/"+ mois +"/"+ anne +" à "+ heure +" heure"}</span>
             </div>
 
             <div className={ styles.detailCount }>
               {/* <IonIcon icon={ personOutline } color="primary" /> */}
-              <span>fin: { (talk.dateFinSignalement)? talk.dateFinSignalement : "..." } </span>
+              <span>fin: { (talk.dateFinSignalement)? jourF +"/"+ moisF +"/"+ anneF +" à "+ heureF +" heure" : "..." } </span>
             </div>
           </div>
         }
@@ -105,4 +146,5 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
       </IonModal> */}
     </>
 	);
+  
 }
