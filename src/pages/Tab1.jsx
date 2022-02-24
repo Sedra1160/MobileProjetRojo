@@ -1,5 +1,5 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import { personOutline } from 'ionicons/icons';
+import { personOutline, logOut } from 'ionicons/icons';
 import { useStoreState } from 'pullstate';
 import { TalkStore } from '../store';
 import { getTalks } from '../store/Selectors';
@@ -54,7 +54,7 @@ const Tab1 = () => {
 
           <IonButtons slot="end">
             <IonButton>
-              <IonIcon icon={ personOutline } />
+              <IonIcon className='icon' icon={ logOut } />
             </IonButton>
           </IonButtons>
         </IonToolbar>

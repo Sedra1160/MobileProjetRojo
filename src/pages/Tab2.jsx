@@ -1,4 +1,3 @@
-import { IonInput,IonItem,IonLabel,IonButton,IonCheckbox, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonTextarea } from '@ionic/react';
 import { camera, trash, close } from 'ionicons/icons';
 import {
   IonContent,
@@ -11,6 +10,8 @@ import {
   IonImg,
   IonActionSheet
 } from '@ionic/react';
+import { IonInput,IonItem,IonLabel,IonButton,IonIcon,IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonContent } from '@ionic/react';
+import {  logOut } from 'ionicons/icons';
 // import './Tab2.css';
 import React, {useState, useEffect} from "react";
 import {useForm, Controller } from "react-hook-form";
@@ -112,6 +113,11 @@ const { photos, takePhoto } = usePhotoGallery();
       <IonHeader>
         <IonToolbar>
           <IonTitle>Ajout signalement</IonTitle>
+          <IonButtons slot="end">
+            <IonButton>
+              <IonIcon className='icon' icon={ logOut } />
+            </IonButton>
+            </IonButtons>
         </IonToolbar>
       </IonHeader> 
 
