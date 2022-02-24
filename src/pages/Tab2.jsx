@@ -32,7 +32,7 @@ const [type, setType] = useState(null);
 
   useEffect(()=>{
     if (compteur){
-      fetch("http://localhost:8090/ato/type")
+      fetch("https://projetcloudrayansedraravo.herokuapp.com/ato/type")
         .then((response) => {
           if (response.ok) {
             return response.json();

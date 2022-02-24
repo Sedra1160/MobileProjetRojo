@@ -23,7 +23,7 @@ export const TalkCard = ({ upcoming = false, talk, pageRef }) => {
   const [compteur, setCompteur] = useState(true);
 
   function affichagePhoto(id){
-    fetch(`http://localhost:8090/ato/photos/${id}`)
+    fetch(`https://projetcloudrayansedraravo.herokuapp.com/ato/photos/${id}`)
     .then((response) => {
       if (response.ok) {
         return response.json();

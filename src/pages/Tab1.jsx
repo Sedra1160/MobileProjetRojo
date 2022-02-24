@@ -21,7 +21,7 @@ const Tab1 = () => {
   const [idUtilisateur] = useState(1);
   useEffect(() => {
     if (compteur){
-    fetch(`http://localhost:8090/ato/signalement/utilisateur/${idUtilisateur}`)
+    fetch(`https://projetcloudrayansedraravo.herokuapp.com/ato/signalement/utilisateur/${idUtilisateur}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
