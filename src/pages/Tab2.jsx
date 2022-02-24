@@ -1,13 +1,12 @@
 import { camera, trash, close } from 'ionicons/icons';
 import {
-  IonContent,
   IonFab,
   IonFabButton,
-  IonIcon,
   IonGrid,
   IonRow,
   IonCol,
   IonImg,
+  IonTextarea,
   IonActionSheet
 } from '@ionic/react';
 import { IonInput,IonItem,IonLabel,IonButton,IonIcon,IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonContent } from '@ionic/react';
@@ -38,8 +37,6 @@ const { photos, takePhoto } = usePhotoGallery();
     setLongitude(position.coords.longitude);
     setLatitude(position.coords.latitude);
   }
-  console.log(latitude);
-  console.log(longitude);
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(Geo);
   }
@@ -59,23 +56,15 @@ const { photos, takePhoto } = usePhotoGallery();
           utilisateur: 1,
         };
         console.log(donnees);
-      // let res = await axios.post('http://localhost:8090/ato/signalement', donnees);
-      // let data = res.data;
-      // setIdSignalement(data.id);
-      let donneesPhoto;
-      let resPhoto;
+      let res = await axios.post('https://projetcloudrayansedraravo.herokuapp.com/ato/signalement', donnees);
+      let data = res.data;
+      setIdSignalement(data.id);
       let config;
       let formData = new FormData();
 
       photos.map((photo) => (
-        formData.append('image',photo.blob),
-        config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        },
-        axios.post(`http://localhost:8090/ato/photos?idSignalement=${3}`, {
-          body: formData,
+        axios.post(`https://projetcloudrayansedraravo.herokuapp.com/ato/photos/${3}`, {
+          body: ('image',new File([photo.data.split("base64,")[1]], photo.filepath, {type : 'image/jpeg'})),
           headers: {
             'Content-Type': 'multipart/form-data; ',
           },
@@ -120,52 +109,40 @@ const { photos, takePhoto } = usePhotoGallery();
             </IonButtons>
         </IonToolbar>
       </IonHeader> 
+      <IonContent>
+        <IonItem> 
+          <IonLabel position="floating" >Description</IonLabel>
+          <IonTextarea value={description} onIonChange={e => setDescription(e.detail.value)}></IonTextarea>
+        </IonItem>
 
-    <IonItem lines="none">
-      <IonLabel className="ion-text-wrap" color="primary"> " veillez inserer les informations necessaires de l'incident " </IonLabel>
-    </IonItem>
-{/*     
-    <IonItem>
-      <IonLabel>votre longitude: {longitude}</IonLabel>
-    </IonItem>
-
-    <IonItem>
-      <IonLabel>votre latitude: {latitude}</IonLabel>
-    </IonItem> */}
-
-    <IonItem> 
-      <IonLabel position="floating" >Description</IonLabel>
-      <IonTextarea value={description} onIonChange={e => setDescription(e.detail.value)}></IonTextarea>
-    </IonItem>
-
-    <IonItem lines="none">
-      <IonLabel>type de signalisation</IonLabel>
-      <IonSelect placeholder='choisir'  value={type}  onIonChange={e => setType(e.detail.value)}>
-      { (data)?data.map((type, typeIndex) => {
-        return typeIndex >= 0 && <IonSelectOption key={typeIndex} value={type.id}>
-        {type.nom}</IonSelectOption>;
-      }):"..."}
-      </IonSelect>
-    </IonItem>
-    <IonContent>
-      <IonGrid>
-        <IonRow>
-          {photos.map((photo, index) => (
-            <IonCol size="6" key={index}>
-              <IonImg src={photo.webviewPath} />
-            </IonCol>
-          ))}
-        </IonRow>
-      </IonGrid>
-    {/* </IonContent>
-    <IonContent> */}
-      <IonFab vertical="bottom" horizontal="center" slot="fixed">
-        <IonFabButton onClick={() => takePhoto()}>
-          <IonIcon icon={camera}>xc</IonIcon>
-        </IonFabButton>
-      </IonFab>
-    </IonContent>
-    <IonButton onClick={postData} className="ion-margin-top" type="submit" expand="block">Envoyer</IonButton>
+        <IonItem lines="none">
+          <IonLabel>type de signalisation</IonLabel>
+          <IonSelect placeholder='choisir'  value={type}  onIonChange={e => setType(e.detail.value)}>
+          { (data)?data.map((type, typeIndex) => {
+            return typeIndex >= 0 && <IonSelectOption key={typeIndex} value={type.id}>
+            {type.nom}</IonSelectOption>;
+          }):"..."}
+          </IonSelect>
+        </IonItem>
+          <IonGrid>
+            <IonRow>
+              {photos.map((photo, index) => (
+                console.log(new File([photo.data.split("base64,")[1]], photo.filepath, {type : 'image/jpeg'})),
+                <IonCol size="6" key={index}>
+                  <IonImg src={photo.webviewPath} />
+                </IonCol>
+              ))}
+            </IonRow>
+          </IonGrid>
+        {/* </IonContent>
+        <IonContent> */}
+          <IonFab vertical="bottom" horizontal="center" slot="fixed">
+            <IonFabButton onClick={() => takePhoto()}>
+              <IonIcon icon={camera}>xc</IonIcon>
+            </IonFabButton>
+          </IonFab>
+        <IonButton vertical="top" onClick={postData} className="ion-margin-top" type="submit" expand="block">Envoyer</IonButton>
+      </IonContent>
     </IonPage>
   );
 };

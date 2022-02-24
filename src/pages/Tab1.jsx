@@ -62,16 +62,6 @@ const Tab1 = () => {
       <IonContent fullscreen>
 
         <IonGrid className="ion-padding-start ion-padding-end extra-padding ion-padding-bottom ion-margin-bottom">
-         
-
-          <IonRow>
-            <IonCol size="12">
-              <IonText color="dark">
-                <p className="title">voici les incidents que vous avez signalés recemment</p>
-              </IonText>
-            </IonCol>
-          </IonRow>
-          
           {/* FANASINA TABLEAU  <talkIndex> numero de tableau  */}
           
             <IonCol size="12">

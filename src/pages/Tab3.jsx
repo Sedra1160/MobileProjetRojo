@@ -14,25 +14,18 @@ const Tab3 = () => {
       </IonHeader> 
       
 {/* <form className="ion-padding">    */}
+  <IonContent lines="none">
     <IonItem> 
         <IonLabel position="floating">Email</IonLabel>
         <IonInput />
       </IonItem>
-   <IonItem>
+    <IonItem>
       <IonLabel position="floating">Mots de passe</IonLabel>
       <IonInput type="password" />
     </IonItem>  
-    <IonItem lines="none">
-      <IonLabel>Remember me</IonLabel>
-      <IonCheckbox defaultChecked={true} slot="start" />
-    </IonItem>
-  
-    <IonContent lines="none">
     <IonButton className="ion-margin-top" type="submit" expand="block">Connexion</IonButton>
     <IonButton className="ion-margin-top" type="submit" expand="block" onClick={()=> setModalInscription({isOpen:true})}>Inscription</IonButton>
-    </IonContent>
 
-    <IonContent className='ion-padding'>
       <IonModal isOpen={modalInscription.isOpen}>
         <IonIcon name='close' className='close' onClick={()=> setModalInscription({onClose: true})} ></IonIcon>
         <h1 className='h1'>Inscription</h1>
@@ -52,11 +45,7 @@ const Tab3 = () => {
         <IonLabel position="floating">Mots de passe</IonLabel>
         <IonInput type="mdp" />
       </IonItem>
-
-      <IonContent lines="none">
       <IonButton className="ion-margin-top" type="submit" expand="block" onClick={()=> setModalInscription({onClose:true})} >Ajouter</IonButton>
-      </IonContent>
-        
       </IonModal>
     </IonContent>
     
