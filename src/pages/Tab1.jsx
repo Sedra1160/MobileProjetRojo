@@ -4,6 +4,7 @@ import { useStoreState } from 'pullstate';
 import { TalkStore } from '../store';
 import { getTalks } from '../store/Selectors';
 import './Tab1.css';
+import React, { useState, useEffect } from "react";
 
 import { TalkCard } from "../components/TalkCard";
 import { useRef } from 'react';
@@ -13,13 +14,43 @@ const Tab1 = () => {
   const pageRef = useRef();
   const talks = useStoreState(TalkStore, getTalks);
 
-  
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [compteur, setCompteur] = useState(true);
+  const [idUtilisateur] = useState(1);
+  useEffect(() => {
+    if (compteur){
+    fetch(`https://projetcloudrayansedraravo.herokuapp.com/ato/signalement/utilisateur/${idUtilisateur}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setData(data);
+        console.log(data);
+        setCompteur(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    }
+  },[compteur]);
+
+  if (loading) return "Loading...";
+  // if (error) return "Error!";
 
   return (
     <IonPage ref={ pageRef }>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tous les signalements</IonTitle>
+          <IonTitle>Historique</IonTitle>
 
           <IonButtons slot="end">
             <IonButton>
@@ -36,20 +67,19 @@ const Tab1 = () => {
           <IonRow>
             <IonCol size="12">
               <IonText color="dark">
-                <p className="title">Cela arrive maintenant</p>
+                <p className="title">voici les incidents que vous avez signalés recemment</p>
               </IonText>
             </IonCol>
           </IonRow>
           
           {/* FANASINA TABLEAU  <talkIndex> numero de tableau  */}
-          <IonRow>
+          
             <IonCol size="12">
-              { talks.map((talk, talkIndex) => {
-                
-                return talkIndex > 0 && <TalkCard key={ talkIndex } talk={ talk } pageRef={ pageRef } />;
+              { data.map((talk, talkIndex) => {
+                return talkIndex >= 0 && <TalkCard key={ talkIndex } talk={ talk } pageRef={ pageRef } />;
               })}
             </IonCol>
-          </IonRow>
+          
         </IonGrid>
       </IonContent>
     </IonPage>
