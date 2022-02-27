@@ -54,13 +54,6 @@ const App = ({goHome}) => {
       icon: notificationsOutline,
       component: Tab4
     },
-    {
-      name: "Account",
-      url: "/account",
-      activeIcon: person,
-      icon: personOutline,
-      component: Tab3
-    }
   ];
   const tab2 = [
     {
