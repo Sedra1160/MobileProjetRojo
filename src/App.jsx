@@ -28,16 +28,10 @@ import './theme/variables.css';
 import './theme/floating-tab-bar.css';
 import { useState } from 'react';
 
-const App = () => {
+const App = ({goHome}) => {
 
   const tabs = [
-    {
-      name: "Account",
-      url: "/account",
-      activeIcon: person,
-      icon: personOutline,
-      component: Tab3
-    },
+    
     {
       name: "Home",
       url: "/home",
@@ -59,19 +53,38 @@ const App = () => {
       activeIcon: notifications,
       icon: notificationsOutline,
       component: Tab4
+    },
+    {
+      name: "Account",
+      url: "/account",
+      activeIcon: person,
+      icon: personOutline,
+      component: Tab3
     }
   ];
+  const tab2 = [
+    {
+      name: "Account",
+      url: "/account",
+      activeIcon: person,
+      icon: personOutline,
+      component: Tab3
+    },
+  ];
 
-  const [ activeTab, setActiveTab ] = useState(tabs[2].name);
+  const [ activeTab, setActiveTab ] = useState(tabs[1].name);//
+  
+  const [tableau , setTableau] = useState(tabs);
+  
   
 
   return (
     <IonApp>
       <IonReactRouter>
-        <IonTabs onIonTabsDidChange={ e => setActiveTab(e.detail.tab) }>
+         <IonTabs /* onIonTabsDidChange={ e => setActiveTab(e.detail.tab) } */> 
           <IonRouterOutlet>
 
-            { tabs.map((tab, index) => {
+            { tableau.map((tab, index) => {
 
               return (
 
@@ -80,28 +93,43 @@ const App = () => {
                 </Route>
               );
             })}
-
             <Route exact path="/">
-              <Redirect to="/account" />
+              <Redirect to="/home" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            { tabs.map((tab, barIndex) => {
+            {
+              
+               tableau.map((tab, barIndex) => {
 
-            const active = tab.name === activeTab;
-            function icon (){
-              return (
-                <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
-              );
+                const active = tab.name === activeTab;
+
+                return (
+                      <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
+                        <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
+                      </IonTabButton>
+                    );
+                // if(activeTab  == 'Account'){
+                //   console.log("login zao");
+                //   return (
+
+                //     <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
+                //       <IonIcon  />
+                //     </IonTabButton>
+                //   );
+                // }
+          
+                //  else if (activeTab  == 'Home' || activeTab  == 'Add' || activeTab  == 'NotificationsNotifications'){
+                //   return (
+          
+                //     <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
+                //       <IonIcon icon={ active ? tab.activeIcon : tab.icon } />
+                //     </IonTabButton>
+                //   );
+                //  }
+                })
+          
             }
-
-              return (
-
-                <IonTabButton key={ `tab_${ barIndex }` } tab={ tab.name } href={ tab.url }>
-                  {icon()}
-                </IonTabButton>
-              );
-            })}
           </IonTabBar>
         </IonTabs>
       </IonReactRouter>

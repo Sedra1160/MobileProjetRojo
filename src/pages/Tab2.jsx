@@ -1,6 +1,7 @@
 import { IonInput,IonItem,IonLabel,IonButton,IonIcon,IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonContent } from '@ionic/react';
 import { useState } from 'react';
 import {  logOut } from 'ionicons/icons';
+import  { useHistory } from 'react-router-dom'
 // import './Tab2.css';
 
 
@@ -23,6 +24,7 @@ const [latitude ,setLatitude]=useState(null);
     console.log("geolocalisation non active");
     alert("geolocalisation non active");
   }
+  
   return (
     <IonPage>
       <IonHeader>
@@ -30,7 +32,7 @@ const [latitude ,setLatitude]=useState(null);
           <IonTitle>Ajout signalement</IonTitle>
           <IonButtons slot="end">
             <IonButton>
-              <IonIcon className='icon' icon={ logOut } />
+              <IonIcon className='icon' icon={ logOut } onClick={()=> window.location.href('/')} />
             </IonButton>
             </IonButtons>
         </IonToolbar>
