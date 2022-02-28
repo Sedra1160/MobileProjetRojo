@@ -1,6 +1,6 @@
 import { camera, trash, close } from 'ionicons/icons';
 import {
-  IonContent,
+  
   IonFab,
   IonFabButton,
   
