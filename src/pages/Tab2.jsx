@@ -3,7 +3,7 @@ import {
   
   IonFab,
   IonFabButton,
-  
+  IonTextarea,
   IonGrid,
   IonRow,
   IonCol,
