@@ -17,11 +17,58 @@ const Tab1 = () => {
   const [modalInscription , setModalInscription]=useState({isOpen:false});  
 
 
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [compteur, setCompteur] = useState(true);
+  const [idUtilisateur] = useState(1);
+  useEffect(() => {
+    if (compteur){
+    fetch(`https://projetcloudrayansedraravo.herokuapp.com/ato/signalement/utilisateur/${idUtilisateur}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setData(data);
+        console.log(data);
+        setCompteur(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    }
+  },[compteur]);
+
+  if (loading) return "Loading...";
+  if (error) return "Error!";
+
 
   return (
     <IonPage ref={ pageRef }>
 
-       
+        <IonModal isOpen={modalLogin.isOpen}>
+        <h1 className='h1'>Login</h1>
+          <IonItem>
+            <IonLabel position="floating">Email</IonLabel>
+            <IonInput type="nom" />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="floating">Mots de passe</IonLabel>
+            <IonInput type="prenom" />
+          </IonItem>
+          
+          <IonContent lines="none">
+          <IonButton className="ion-margin-top" type="submit" expand="block" onClick={()=> setModalLogin({onClose:true})} >Valider</IonButton>
+          <IonButton className="ion-margin-top" type="submit" expand="block" onClick={()=> setModalInscription({isOpen:true})}>Inscription</IonButton>
+          </IonContent>     
+        </IonModal>
 
         <IonModal isOpen={modalInscription.isOpen}>
         <IonIcon name='close' className='close' onClick={()=> setModalInscription({onClose: true})} ></IonIcon>
@@ -54,8 +101,8 @@ const Tab1 = () => {
           <IonTitle>Historique</IonTitle>
 
           <IonButtons slot="end" >
-            <IonButton >
-              <IonIcon className='icon' icon={ logOut } onClick={()=> setModalLogin({isOpen:true})} />
+            <IonButton  >
+              <IonIcon  className='icon' icon={ logOut } onClick={()=> setModalLogin({isOpen:true})}/>
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -72,24 +119,6 @@ const Tab1 = () => {
           
         </IonGrid>
       </IonContent>
-        
-      <IonModal isOpen={modalLogin.isOpen}>
-        <h1 className='h1'>Login</h1>
-          <IonItem>
-            <IonLabel position="floating">Email</IonLabel>
-            <IonInput type="nom" />
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">Mots de passe</IonLabel>
-            <IonInput type="prenom" />
-          </IonItem>
-          
-          <IonContent lines="none">
-          <IonButton className="ion-margin-top" type="submit" expand="block" onClick={()=> setModalLogin({onClose:true})} >Valider</IonButton>
-          <IonButton className="ion-margin-top" type="submit" expand="block" onClick={()=> setModalInscription({isOpen:true})}>Inscription</IonButton>
-          </IonContent>     
-        </IonModal>
-
     </IonPage>
   );
 };
